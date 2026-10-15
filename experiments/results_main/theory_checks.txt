@@ -1,0 +1,28 @@
+P1 max |closed-form - Huber| = 1.3877787807814457e-17
+P1 tau_k/sigma_k with lam=6/sqrt(MN): 1.6340768011148183  = sqrt2(1+sqrt(p/MN)) = 1.6340768011148186
+
+P3 false alarm (stripe-free data): fraction of nonzero stripe amplitudes a_jk
+  c   sigma   observed   2*Phi(-c)
+  2  0.05   0.0354     0.0455   [pavia64]
+  3  0.05   0.0013     0.0027   [pavia64]
+  4  0.05   0.0000     0.0001   [pavia64]
+  2  0.10   0.0328     0.0455   [pavia64]
+  3  0.10   0.0011     0.0027   [pavia64]
+  4  0.10   0.0000     0.0001   [pavia64]
+  2  0.05   0.0305     0.0455   [belt64]
+  3  0.05   0.0013     0.0027   [belt64]
+  4  0.05   0.0000     0.0001   [belt64]
+  2  0.10   0.0316     0.0455   [belt64]
+  3  0.10   0.0011     0.0027   [belt64]
+  4  0.10   0.0000     0.0001   [belt64]
+  2  0.05   0.0359     0.0455   [wdc1]
+  3  0.05   0.0016     0.0027   [wdc1]
+  4  0.05   0.0000     0.0001   [wdc1]
+  2  0.10   0.0312     0.0455   [wdc1]
+  3  0.10   0.0013     0.0027   [wdc1]
+  4  0.10   0.0000     0.0001   [wdc1]
+
+P4 relative change of sigma_k over the last 3 iterations (max over bands) / beta_k*sigma_k
+  pavia64 c5: iters=21  max rel change last step=8.00e-04  last 3 steps=2.17e-03  median sigma_hat=0.0492
+  belt64 c8: iters=20  max rel change last step=1.39e-03  last 3 steps=3.01e-03  median sigma_hat=0.1036
+  wdc1 c3: iters=20  max rel change last step=1.02e-03  last 3 steps=2.44e-03  median sigma_hat=0.1030

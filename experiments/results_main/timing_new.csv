@@ -1,0 +1,12 @@
+ds,meth,sec,note
+pavia120_c8,FastHyMix,2.61,
+pavia120_c8,L1HyMixDe,23.17,
+pavia120_c8,tCTVd,67.37,
+belt100_c8,FastHyMix,2.15,
+belt100_c8,L1HyMixDe,16.38,
+belt100_c8,tCTVd,66.28,
+indian220,FastHyMix,3.72,
+indian220,L1HyMixDe,12.10,
+indian220,tCTVd,270.48,
+pavia120_c8,S3TTV,2561.20,3.50s/iter x 731 iters
+belt100_c8,S3TTV,2150.67,2.89s/iter x 743 iters

@@ -1,0 +1,16 @@
+# third-party code and data: obtain from their authors (see the README files in these folders)
+/code/*
+!/code/README.md
+/data/*
+!/data/README.md
+/experiments/external/*
+!/experiments/external/README.md
+# generated or large
+/experiments/matlab/tctv_trpca_lam.m
+/experiments/results/
+/experiments/results_main/real/
+/experiments/results_main/logs/
+/experiments/paper_*/
+__pycache__/
+*.asv
+*.mex*

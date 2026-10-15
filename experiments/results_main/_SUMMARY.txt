@@ -1,0 +1,63 @@
+Summary of F:\1_projects\grsl_paper_experiments_2026-10-12\new_method_2026-10-12\results_main  (2026-10-15 00:41)
+
+belt100   E3DTV       58/58  ok
+belt100   FastHyMix   53/58  released code crashed in some runs (expected)
+belt100   L1HyMixDe   58/58  ok
+belt100   LRTDTV      58/58  ok
+belt100   OLD         58/58  ok
+belt100   OLDband     58/58  ok
+belt100   RCCTV       58/58  ok
+belt100   S3TTV        8/8   ok
+belt100   SC          58/58  ok
+belt100   SC_fix      58/58  ok
+belt100   SC_noG      58/58  ok
+belt100   SC_noT      58/58  ok
+belt100   SC_scalar   58/58  ok
+belt100   SCv         58/58  ok
+belt100   tCTV         8/8   ok
+belt100   tCTVd       58/58  ok
+pavia120  E3DTV       58/58  ok
+pavia120  FastHyMix   58/58  ok
+pavia120  L1HyMixDe   58/58  ok
+pavia120  LRTDTV      58/58  ok
+pavia120  OLD         58/58  ok
+pavia120  OLDband     58/58  ok
+pavia120  RCCTV       58/58  ok
+pavia120  S3TTV        8/8   ok
+pavia120  SC          58/58  ok
+pavia120  SC_fix      58/58  ok
+pavia120  SC_noG      58/58  ok
+pavia120  SC_noT      58/58  ok
+pavia120  SC_scalar   58/58  ok
+pavia120  SCv         58/58  ok
+pavia120  tCTV         8/8   ok
+pavia120  tCTVd       58/58  ok
+
+tune_tctv_wdc1.csv         ok
+tune_tctv_wdc2.csv         ok
+tune_tctv_indian.csv       ok
+tctv_mult.txt              ok
+real_metrics.csv           ok
+real_indian_cls.csv        ok
+sigma_stats.csv            ok
+real_picks.csv             ok
+rank_sens.csv              ok
+timing.csv                 ok
+timing_new.csv             ok
+large.csv                  ok
+check_fa.txt               ok
+check_fp.txt               ok
+env_main.txt               ok
+figs\fig_sim_visual.pdf    ok
+figs\fig_real_visual.pdf   ok
+figs\fig_sigma_curve.pdf   ok
+figs\fig_pareto.pdf        ok
+
+ERROR lines in the MATLAB logs: 5
+sim_fhB_1014_210446.log: ERROR belt100 c7 s0 FastHyMix : Index in position 2 exceeds array bounds. Index must not exceed 1.
+sim_fhB_1014_210446.log: ERROR belt100 c7 s1 FastHyMix : Index in position 2 exceeds array bounds. Index must not exceed 1.
+sim_fhB_1014_210446.log: ERROR belt100 c7 s2 FastHyMix : Index in position 2 exceeds array bounds. Index must not exceed 2.
+sim_fhB_1014_210446.log: ERROR belt100 c7 s3 FastHyMix : Index in position 2 exceeds array bounds. Index must not exceed 3.
+sim_fhB_1014_210446.log: ERROR belt100 c7 s5 FastHyMix : Index in position 2 exceeds array bounds. Index must not exceed 1.
+
+STATUS COMPLETE

@@ -1,0 +1,117 @@
+date 2026-10-14 19:53:14
+MATLAB 9.12.0.1884302 (R2022a)
+computer PCWIN64
+maxNumCompThreads 20
+BLAS Intel(R) oneAPI Math Kernel Library Version 2021.3-Product Build 20210611 for Intel(R) 64 architecture applications (CNR branch AVX2)
+LAPACK Intel(R) oneAPI Math Kernel Library Version 2021.3-Product Build 20210611 for Intel(R) 64 architecture applications (CNR branch AVX2) supporting Linear Algebra PACKage (LAPACK 3.9.0)
+toolbox 5G Toolbox 2.4
+toolbox AUTOSAR Blockset 2.6
+toolbox Aerospace Blockset 5.2
+toolbox Aerospace Toolbox 4.2
+toolbox Antenna Toolbox 5.2
+toolbox Audio Toolbox 3.2
+toolbox Automated Driving Toolbox 3.5
+toolbox Bioinformatics Toolbox 4.16
+toolbox Bluetooth Toolbox 1.0
+toolbox Communications Toolbox 7.7
+toolbox Computer Vision Toolbox 10.2
+toolbox Control System Toolbox 10.11.1
+toolbox Curve Fitting Toolbox 3.7
+toolbox DDS Blockset 1.2
+toolbox DSP HDL Toolbox 1.0
+toolbox DSP System Toolbox 9.14
+toolbox Data Acquisition Toolbox 4.5
+toolbox Database Toolbox 10.3
+toolbox Datafeed Toolbox 6.2
+toolbox Deep Learning HDL Toolbox 1.3
+toolbox Deep Learning Toolbox 14.4
+toolbox Econometrics Toolbox 6.0
+toolbox Embedded Coder 7.8
+toolbox Filter Design HDL Coder 3.1.11
+toolbox Financial Instruments Toolbox 3.4
+toolbox Financial Toolbox 6.3
+toolbox Fixed-Point Designer 7.4
+toolbox Fuzzy Logic Toolbox 2.9
+toolbox GPU Coder 2.3
+toolbox Global Optimization Toolbox 4.7
+toolbox HDL Coder 3.20
+toolbox HDL Verifier 6.5
+toolbox Image Acquisition Toolbox 6.6
+toolbox Image Processing Toolbox 11.5
+toolbox Industrial Communication Toolbox 6.0
+toolbox Instrument Control Toolbox 4.6
+toolbox LTE Toolbox 3.7
+toolbox Lidar Toolbox 2.1
+toolbox MATLAB 9.12
+toolbox MATLAB Coder 5.4
+toolbox MATLAB Compiler 8.4
+toolbox MATLAB Compiler SDK 7.0
+toolbox MATLAB Report Generator 5.12
+toolbox Mapping Toolbox 5.3
+toolbox Mixed-Signal Blockset 2.2
+toolbox Model Predictive Control Toolbox 7.3
+toolbox Model-Based Calibration Toolbox 5.12
+toolbox Motor Control Blockset 1.4
+toolbox Navigation Toolbox 2.2
+toolbox Optimization Toolbox 9.3
+toolbox Parallel Computing Toolbox 7.6
+toolbox Partial Differential Equation Toolbox 3.8
+toolbox Phased Array System Toolbox 4.7
+toolbox Powertrain Blockset 1.11
+toolbox Predictive Maintenance Toolbox 2.5
+toolbox RF Blockset 8.3
+toolbox RF PCB Toolbox 1.1
+toolbox RF Toolbox 4.3
+toolbox ROS Toolbox 1.5
+toolbox Radar Toolbox 1.2
+toolbox Reinforcement Learning Toolbox 2.2
+toolbox Requirements Toolbox 2.0
+toolbox Risk Management Toolbox 2.0
+toolbox Robotics System Toolbox 4.0
+toolbox Robust Control Toolbox 6.11.1
+toolbox Satellite Communications Toolbox 1.2
+toolbox Sensor Fusion and Tracking Toolbox 2.3
+toolbox SerDes Toolbox 2.3
+toolbox Signal Integrity Toolbox 1.1
+toolbox Signal Processing Toolbox 9.0
+toolbox SimBiology 6.3
+toolbox SimEvents 5.11
+toolbox Simscape 5.3
+toolbox Simscape Driveline 3.5
+toolbox Simscape Electrical 7.7
+toolbox Simscape Fluids 3.4
+toolbox Simscape Multibody 7.5
+toolbox Simulink 10.5
+toolbox Simulink 3D Animation 9.4
+toolbox Simulink Check 6.0
+toolbox Simulink Code Inspector 4.1
+toolbox Simulink Coder 9.7
+toolbox Simulink Compiler 1.4
+toolbox Simulink Control Design 6.1
+toolbox Simulink Coverage 5.4
+toolbox Simulink Design Optimization 3.11
+toolbox Simulink Design Verifier 4.7
+toolbox Simulink Desktop Real-Time 5.14
+toolbox Simulink PLC Coder 3.6
+toolbox Simulink Real-Time 8.0
+toolbox Simulink Report Generator 5.12
+toolbox Simulink Test 3.6
+toolbox SoC Blockset 1.6
+toolbox Spreadsheet Link 3.4.7
+toolbox Stateflow 10.6
+toolbox Statistics and Machine Learning Toolbox 12.3
+toolbox Symbolic Math Toolbox 9.1
+toolbox System Composer 2.2
+toolbox System Identification Toolbox 9.16
+toolbox Text Analytics Toolbox 1.8.1
+toolbox UAV Toolbox 1.3
+toolbox Vehicle Dynamics Blockset 1.8
+toolbox Vehicle Network Toolbox 5.2
+toolbox Vision HDL Toolbox 2.5
+toolbox WLAN Toolbox 3.4
+toolbox Wavelet Toolbox 6.1
+toolbox Wireless HDL Toolbox 2.4
+toolbox Wireless Testbench 1.0
+STATUS OK
+CPU Intel(R) Core(TM) i7-14700KF; 20 cores / 28 logical; RAM 31.8 GB; Microsoft Windows 11 ×¨Òµ°æ 10.0.26300
+Python 3.10.6 (tags/v3.10.6:9c7b4bd, Aug  1 2022, 21:53:49) [MSC v.1932 64 bit (AMD64)] | 2.2.6 1.15.3
