@@ -76,6 +76,12 @@ SC-RCCTV/
    It is resumable; `-Phase <name>` runs a single phase and `-Par <n>` sets the number of parallel MATLAB processes.
    On a fresh setup add `-WithS3TTV` (S3TTV takes about 40 min per cube on the CPU); without it, earlier S3TTV
    results in `experiments/results/` are reused.
+   Two control runs added in the revision are not part of the script; they are deterministic and take about 1 h on
+   a laptop. With `RESULTS_DIR=results_main`, `SIM_METHS=SC_true,SC_tight`, `SIM_SEEDS=0,1,2,3,4,5`,
+   `SIM_CASES=1,2,3,4,5,6,7,8,9,10`, run `matlab/sim_run.m` once with `SIM_CUBE=pavia120`, `SIM_TAG=ctrlP` and once
+   with `SIM_CUBE=belt100`, `SIM_TAG=ctrlB` (`SC_true`: the same model with the true per-band noise levels;
+   `SC_tight`: tolerance 1e-7, at most 300 iterations). The predicted stripe false-alarm rate (Proposition 2) is
+   computed by `python fa_predict.py > results_main/fa_predict.txt`.
 5. `python make_rsl.py` (with `RESULTS_DIR=results_main`) turns the CSV files into the LaTeX tables and the numbers
    quoted in the text.
 

@@ -115,6 +115,13 @@ if _t:
         if m:
             v = [100 * float(x) for x in m.groups()]
             K[f'fa.c{c}'] = f'{min(v):.{nd}f}--{max(v):.{nd}f}'
+_t = _read('fa_predict.txt')                     # predicted false-alarm rate (fa_predict.py), in %
+if _t:
+    for c, nd in ((3, 2), (2, 1)):
+        m = re.search(rf'c={c}: predicted range ([\d.]+)-([\d.]+)%', _t)
+        if m:
+            lo, hi = f'{float(m.group(1)):.{nd}f}', f'{float(m.group(2)):.{nd}f}'
+            K[f'fapred.c{c}'] = lo if lo == hi else f'{lo}--{hi}'
 _t = _read('check_fp.txt')                      # settling of the noise levels at termination (check_fp.py)
 if _t:
     m = re.search(r'runs:\s*(\d+).*?\(last step\):\s*([0-9.eE+-]+)\s+median over runs:\s*([0-9.eE+-]+)', _t)
@@ -165,7 +172,7 @@ for m in NAME:
 
 # ------------------------------------------------------------------ simulated: gains of SC over every reference
 pv = df.pivot_table(index=['cube', 'case', 'seed'], columns='meth', values='mpsnr')
-for ref in ['RCCTV', 'LRTDTV', 'E3DTV', 'FastHyMix', 'L1HyMixDe', 'OLD', 'OLDband', 'SCv', 'SC_scalar', 'SC_noT', 'SC_noG', 'SC_fix', 'tCTVd', 'S3TTV']:
+for ref in ['RCCTV', 'LRTDTV', 'E3DTV', 'FastHyMix', 'L1HyMixDe', 'OLD', 'OLDband', 'SCv', 'SC_scalar', 'SC_noT', 'SC_noG', 'SC_fix', 'SC_true', 'SC_tight', 'tCTVd', 'S3TTV']:
     if ref not in pv:
         continue
     d = (pv['SC'] - pv[ref]).dropna()
@@ -173,6 +180,7 @@ for ref in ['RCCTV', 'LRTDTV', 'E3DTV', 'FastHyMix', 'L1HyMixDe', 'OLD', 'OLDban
         continue
     K[f'min.{ref}'] = sgn(d.min())
     K[f'umin.{ref}'] = f'{abs(d.min()):.2f}'
+    K[f'amax.{ref}'] = f'{d.abs().max():.2f}'           # largest |difference| in any cell
     for g, cs in GRP.items():
         dd = d[d.index.get_level_values('case').isin(cs)]
         if len(dd):
@@ -338,11 +346,12 @@ fam = {'Gauss.+imp. (1--3)': [1, 2, 3], 'Stripes (4--8)': [4, 5, 6, 7, 8], 'Band
 variants = [('SC', 'SC-RCCTV (full)'), ('SC_noT', 'without stripe term $T$'), ('SC_noG', 'without dense term $G$'),
             ('SC_scalar', 'scalar $\\sigma$ instead of $\\sigma_k$'),
             ('SC_fix', '$\\hat\\sigma_k^{(0)}$ kept fixed (two-stage)'), ('SCv', 'column stripes only'),
-            ('OLD', 'known $\\sigma$ and stripe radius'), ('OLDband', 'known $\\sigma_k$ and stripe radius')]
-known = (' Below the rule: RCCTV with a dense term and an $\\ell_1$-ball stripe set that are given the true noise level'
-         ' (scalar $\\sigma$, root mean square of $\\sigma_k$ in cases 9--10, or the band-wise $\\sigma_k$) and the true stripe'
-         ' radius, i.e.\\ the noise-aware model with known noise parameters.')
-for fname, keep, label in (('tab_abl.tex', ['SC', 'SC_noT', 'SC_noG', 'SC_scalar', 'SC_fix', 'OLD', 'OLDband'], 'tab:abl'),
+            ('SC_true', 'true $\\sigma_k$ (all else unchanged)'),
+            ('OLD', 'RCCTV-K, true $\\sigma$ and radius'), ('OLDband', 'RCCTV-K, true $\\sigma_k$ and radius')]
+known = (' Below the rule: SC-RCCTV with the true $\\sigma_k$ in place of the self-calibrated ones, all else unchanged;'
+         ' and RCCTV-K, a different noise-aware model: RCCTV with a dense term weighted by the true noise level (scalar $\\sigma$,'
+         ' the root mean square of $\\sigma_k$ in cases 9--10, or the band-wise $\\sigma_k$) and an $\\ell_1$-ball stripe set with the true radius.')
+for fname, keep, label in (('tab_abl.tex', ['SC', 'SC_noT', 'SC_noG', 'SC_scalar', 'SC_fix', 'SC_true', 'OLD', 'OLDband'], 'tab:abl'),
                            ('tab_abl_full.tex', [k for k, _ in variants], 'tab:ablfull')):
     lines = [r'\begin{table}[!htbp]', r'\tbl{Ablation: mean MPSNR gain (dB) over RCCTV by noise family (both cubes, all realizations).' + known + '}',
              r'{\small\setlength{\tabcolsep}{6pt}', r'\begin{tabular}{lcccc}', r'\toprule',
@@ -350,7 +359,7 @@ for fname, keep, label in (('tab_abl.tex', ['SC', 'SC_noT', 'SC_noG', 'SC_scalar
     for key, lab in variants:
         if key not in keep:
             continue
-        if key == 'OLD':
+        if key == 'SC_true':
             lines.append(r'\midrule')
         if key not in pv:
             lines.append(lab + ' & ' + ' & '.join([TBD] * (len(fam) + 1)) + r'\\')
@@ -372,11 +381,19 @@ if 'SC_fix' in pv:
     d = (pv['SC'] - pv['SC_fix']).dropna()
     K['fix.max'] = f'{d.max():.2f}'
     K['fix.c4'] = f"{d[d.index.get_level_values('case') == 4].mean():.2f}"
+    _o = d[d.index.get_level_values('case') != 4]
+    K['fix.other'] = f'{_o.mean():.2f}'                                    # cases other than 4
+    K['fix.share'] = f"{100 * d[d.index.get_level_values('case') == 4].sum() / d.sum():.0f}"   # % of the total gain from case 4
+# stopping-rule check: tolerance 1e-7 and up to 300 iterations instead of 1e-5 / 100
+if 'SC_tight' in pv:
+    _d = (pv['SC_tight'] - pv['SC']).dropna().abs()
+    K['tight.max'], K['tight.mean'], K['tight.n'] = f'{_d.max():.2f}', f'{_d.mean():.2f}', str(len(_d))
+    K['iters.SC_tight'] = f"{df[df.meth == 'SC_tight'].iters.mean():.0f}"
 
 # ------------------------------------------------------------------ Table 5: full-size scenes
 LM = ['RCCTV', 'LRTDTV', 'E3DTV', 'tCTVd', 'FastHyMix', 'L1HyMixDe', 'SC']
 L = pd.read_csv(R + 'large.csv') if os.path.exists(R + 'large.csv') else None
-lines = [r'\begin{table}[!htbp]', r'\tbl{Full-size scenes, one run per method on an otherwise idle machine: Pavia University $610{\times}340{\times}103$ (cases 8 and 10, one realization) and Urban $307{\times}307{\times}210$ (real; stripe index of the 20 stripiest bands, $\times10^{-3}$).}',
+lines = [r'\begin{table}[!htbp]', r'\tbl{Full-size scenes, one run per method on an otherwise idle machine: Pavia University $610{\times}340{\times}103$ (cases 8 and 10, one realization) and Urban $307{\times}307{\times}210$ (real; stripe index averaged over the 20 bands with the highest stripe index in the input, $\times10^{-3}$).}',
          r'{\small\setlength{\tabcolsep}{5pt}', r'\begin{tabular}{lccccc}', r'\toprule',
          r' & \multicolumn{3}{c}{Pavia University (full)} & \multicolumn{2}{c}{Urban (full)}\\',
          r'Method & MPSNR c8 & MPSNR c10 & Time (s) & Stripe$\downarrow$ & Time (s)\\', r'\midrule']
@@ -421,7 +438,7 @@ if L is not None:
 rm = pd.read_csv(R + 'real_metrics.csv')
 cl = pd.read_csv(R + 'real_indian_cls.csv').set_index('meth')
 order = ['Input', 'RCCTV', 'LRTDTV', 'E3DTV', 'tCTVd', 'FastHyMix', 'L1HyMixDe', 'SC']
-lines = [r'\begin{table}[!htbp]', r'\tbl{Real data. Indian Pines: overall accuracy (OA, mean $\pm$ std over 5 splits) and $\kappa$ of an RBF-SVM with 10\% training samples per class. Urban ($200{\times}200$ crop): stripe index of the 20 stripiest bands and largest change of a band mean, both $\times10^{-3}$. Time: Indian Pines, idle machine; t-CTV was run on Indian Pines only.}',
+lines = [r'\begin{table}[!htbp]', r'\tbl{Real data. Indian Pines: overall accuracy (OA, mean $\pm$ std over 5 splits) and $\kappa$ of an RBF-SVM with 10\% training samples per class. Urban ($200{\times}200$ crop): stripe index averaged over the 20 noisiest bands of the input, and largest change of a band mean, both $\times10^{-3}$. Time: Indian Pines, idle machine; t-CTV was run on Indian Pines only.}',
          r'{\small\setlength{\tabcolsep}{5pt}', r'\begin{tabular}{lccccc}', r'\toprule',
          r'Method & OA (\%)$\uparrow$ & $\kappa\uparrow$ & Stripe$\downarrow$ & Shift$\downarrow$ & Time (s)\\', r'\midrule']
 for k in order:

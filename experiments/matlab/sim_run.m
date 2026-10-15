@@ -32,6 +32,8 @@ for c = cases
         case 'SC_noT',    [X,i] = sc_rcctv(Y, struct('T_mode','none')); iters = i.iters;
         case 'SC_noG',    [X,i] = sc_rcctv(Y, struct('G_mode','none','sig_online',false)); iters = i.iters;
         case 'SC_fix',    [X,i] = sc_rcctv(Y, struct('sig_online',false)); iters = i.iters;   % sigma_k from the input only (two-stage)
+        case 'SC_true',   [X,i] = sc_rcctv(Y, struct('G_mode','peng','sigma',sg,'sig_online',false)); iters = i.iters;   % same model, true sigma_k
+        case 'SC_tight',  [X,i] = sc_rcctv(Y, struct('tol',1e-7,'maxIter',300)); iters = i.iters;   % stopping-rule check
         case 'E3DTV',     rng(0); X = EnhancedTV(Y, 0.004*sqrt(M*N), [13 13 13]);
         case 'LRTDTV',    rng(0); X = LRTDTV(Y, 1, 10, [round(0.8*M) round(0.8*N) 10]);
         case 'tCTV',      randn('state',0); rand('state',0); X = TCTV_TRPCA(Y, struct('directions',[1 2]));

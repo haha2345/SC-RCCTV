@@ -187,10 +187,11 @@ write('tab_seed0.tex', lines)
 fam = {'G+I': [1, 2, 3], 'Str.': [4, 5, 6, 7, 8], 'B.-v.': [9, 10]}
 variants = [('SC', 'SC-RCCTV (full)'), ('SC_noT', 'without stripe term $T$'), ('SC_noG', 'without dense term $G$'),
             ('SC_scalar', r'scalar $\sigma$ instead of $\sigma_k$'), ('SC_fix', r'$\hat\sigma_k^{(0)}$ kept fixed (two-stage)'),
-            ('SCv', 'column stripes only'), ('OLD', r'known $\sigma$ and stripe radius'), ('OLDband', r'known $\sigma_k$ and stripe radius')]
+            ('SCv', 'column stripes only'), ('SC_true', r'true $\sigma_k$ (all else unchanged)'),
+            ('OLD', r'RCCTV-K, true $\sigma$ and radius'), ('OLDband', r'RCCTV-K, true $\sigma_k$ and radius')]
 cap = (r'Ablation: mean MPSNR gain (dB) over RCCTV by noise family (G+I: cases 1--3; Str.: 4--8; B.-v.: 9--10; both cubes, all realizations). '
-       r'Below the rule: RCCTV with a dense term and an $\ell_1$-ball stripe set given the true noise level (scalar $\sigma$, i.e.\ the root mean square of $\sigma_k$ in cases 9--10, or the band-wise $\sigma_k$) and the true stripe radius.')
-for fname, keep, dirs in (('tab_abl.tex', ['SC', 'SC_noT', 'SC_noG', 'SC_scalar', 'SC_fix', 'OLD', 'OLDband'], [GRSL]),
+       r'Below the rule: SC-RCCTV with the true $\sigma_k$ in place of the self-calibrated ones, all else unchanged; and RCCTV-K, a different noise-aware model: RCCTV with a dense term weighted by the true noise level (scalar $\sigma$, i.e.\ the root mean square of $\sigma_k$ in cases 9--10, or the band-wise $\sigma_k$) and an $\ell_1$-ball stripe set with the true radius.')
+for fname, keep, dirs in (('tab_abl.tex', ['SC', 'SC_noT', 'SC_noG', 'SC_scalar', 'SC_fix', 'SC_true', 'OLD', 'OLDband'], [GRSL]),
                           ('tab_abl_full.tex', [k for k, _ in variants], BOTH)):
     lines = [r'\begin{table}[!t]', r'\caption{' + cap + '}', r'\label{tab:abl}' if fname == 'tab_abl.tex' else r'\label{tab:ablfull}',
              r'\centering', r'\scriptsize', r'\setlength{\tabcolsep}{4pt}', r'\begin{tabular}{lcccc}', r'\toprule',
@@ -198,7 +199,7 @@ for fname, keep, dirs in (('tab_abl.tex', ['SC', 'SC_noT', 'SC_noG', 'SC_scalar'
     for key, lab in variants:
         if key not in keep:
             continue
-        if key == 'OLD':
+        if key == 'SC_true':
             lines.append(r'\midrule')
         if key not in pv:
             lines.append(lab + ' & ' + ' & '.join([TBD] * 4) + r'\\')
@@ -212,7 +213,7 @@ for fname, keep, dirs in (('tab_abl.tex', ['SC', 'SC_noT', 'SC_noG', 'SC_scalar'
 # ------------------------------------------------------------------ real data (one column)
 order = ['Input', 'RCCTV', 'LRTDTV', 'E3DTV', 'tCTVd', 'FastHyMix', 'L1HyMixDe', 'SC']
 lines = [r'\begin{table}[!t]',
-         r'\caption{Real data. Indian Pines: overall accuracy (OA, mean $\pm$ std over 5 splits) and $\kappa$ of an RBF-SVM with 10\% training samples per class. Urban ($200{\times}200$): stripe index of the 20 stripiest bands and largest change of a band mean, both $\times10^{-3}$. Time: Indian Pines, idle machine; t-CTV was run on Indian Pines only.}',
+         r'\caption{Real data. Indian Pines: overall accuracy (OA, mean $\pm$ std over 5 splits) and $\kappa$ of an RBF-SVM with 10\% training samples per class. Urban ($200{\times}200$): stripe index averaged over the 20 noisiest bands of the input, and largest change of a band mean, both $\times10^{-3}$. Time: Indian Pines, idle machine; t-CTV was run on Indian Pines only.}',
          r'\label{tab:real}', r'\centering', r'\scriptsize', r'\setlength{\tabcolsep}{3pt}', r'\begin{tabular}{lccccc}', r'\toprule',
          r'Method & OA (\%)$\uparrow$ & $\kappa\uparrow$ & Stripe$\downarrow$ & Shift$\downarrow$ & Time (s)\\', r'\midrule']
 for k in order:
@@ -230,7 +231,7 @@ write('tab_real.tex', lines)
 # ------------------------------------------------------------------ full-size scenes (one column)
 LM = ['RCCTV', 'LRTDTV', 'E3DTV', 'tCTVd', 'FastHyMix', 'L1HyMixDe', 'SC']
 lines = [r'\begin{table}[!t]',
-         r'\caption{Full-size scenes, one run per method on an otherwise idle machine: Pavia University $610{\times}340{\times}103$ (cases 8 and 10) and Urban $307{\times}307{\times}210$ (real; stripe index of the 20 stripiest bands, $\times10^{-3}$). S3TTV is not included: its memory use exceeds 16\,GB at this size.}',
+         r'\caption{Full-size scenes, one run per method on an otherwise idle machine: Pavia University $610{\times}340{\times}103$ (cases 8 and 10) and Urban $307{\times}307{\times}210$ (real; stripe index averaged over the 20 bands with the highest stripe index in the input, $\times10^{-3}$). S3TTV is not included: its memory use exceeds 16\,GB at this size.}',
          r'\label{tab:large}', r'\centering', r'\scriptsize', r'\setlength{\tabcolsep}{3pt}', r'\begin{tabular}{lccccc}', r'\toprule',
          r' & \multicolumn{3}{c}{Pavia University} & \multicolumn{2}{c}{Urban}\\', r'\cmidrule(lr){2-4}\cmidrule(lr){5-6}',
          r'Method & c8 & c10 & Time (s) & Stripe$\downarrow$ & Time (s)\\', r'\midrule']

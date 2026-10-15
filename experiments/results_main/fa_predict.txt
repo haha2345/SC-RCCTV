@@ -1,0 +1,6 @@
+cube     t=tau/sigma  kappa   predicted c=3   predicted c=2   Monte Carlo c=3   Monte Carlo c=2
+pavia64      1.634   0.828        0.098%          2.79%          0.095%            2.78%
+belt64       1.664   0.838        0.105%          2.89%          0.098%            2.88%
+wdc1         1.635   0.828        0.098%          2.80%          0.099%            2.79%
+c=3: predicted range 0.098-0.105%  (nominal 2Phi(-c) 0.270%)
+c=2: predicted range 2.792-2.886%  (nominal 2Phi(-c) 4.550%)
